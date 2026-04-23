@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mara’s Velouré Admin</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f4ef;
+      color: #111;
+    }
+
+    .wrap {
+      max-width: 950px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .login-box {
+      max-width: 420px;
+      margin: 100px auto;
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .sub {
+      color: #666;
+      margin-bottom: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-main {
+      background: #111;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #c62828;
+      color: white;
+    }
+
+    .help-box {
+      background: #f3efff;
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 16px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .saved-list {
+      margin-top: 34px;
+    }
+
+    .saved-item {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .saved-item p {
+      margin: 6px 0;
+      color: #555;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #777;
+    }
+
+    .image-drop,
+    .color-upload-drop {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #fafafa;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .image-drop.dragover,
+    .color-upload-drop.dragover {
+      border-color: #111;
+      background: #f2f2f2;
+    }
+
+    .image-preview {
+      margin-top: 12px;
+      max-width: 180px;
+      max-height: 180px;
+      width: auto;
+      height: auto;
+      display: none;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .color-upload-box,
+    .size-price-box {
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+      background: #fafafa;
+    }
+
+    .color-upload-preview {
+      margin-top: 10px;
+      max-width: 140px;
+      max-height: 140px;
+      width: auto;
+      height: auto;
+      display: none;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .saved-item {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loginSection" class="login-box">
+    <h2>Admin Login</h2>
+    <p class="sub">This page is just for you.</p>
+
+    <input type="password" id="adminPassword" placeholder="Enter password" />
+
+    <div class="btn-row">
+      <button class="btn-main" onclick="checkLogin()">Login</button>
+    </div>
+  </div>
+
+  <div id="adminSection" class="wrap" style="display:none;">
+    <h1>Mara’s Velouré Admin</h1>
+    <p class="sub">Add shirts, cups, lanyards, and more here without changing your main website code.</p>
+
+    <div class="grid">
+      <div>
+        <label>Product Name</label>
+        <input id="productName" placeholder="Ex: Soft Luxe Tee" />
+      </div>
+
+      <div>
+        <label>Category</label>
+        <input id="productCategory" placeholder="Ex: T-Shirts, Lanyards, Cups" />
+      </div>
+
+      <div>
+        <label>Base Price</label>
+        <input id="productPrice" type="number" placeholder="34" />
+      </div>
+
+      <div>
+        <label>Sizes</label>
+        <input id="productSizes" placeholder="Ex: S, M, L, XL, 2X, 3X" />
+      </div>
+
+      <div class="full">
+        <label>Size Prices</label>
+        <button type="button" class="btn-secondary" onclick="buildSizePriceFields()">Create Size Price Boxes</button>
+        <div id="sizePriceFields" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="full">
+        <label>Description</label>
+        <textarea id="productDescription" placeholder="Write the product description"></textarea>
+      </div>
+
+      <div class="full">
+        <label>Main Image (Drag & Drop or Click)</label>
+        <div id="imageDrop" class="image-drop">Drop image here or click</div>
+        <input type="file" id="imageFile" accept="image/*" style="display:none;" />
+        <input type="hidden" id="productImage" />
+        <img id="imagePreview" class="image-preview" alt="Image preview" />
+      </div>
+
+      <div class="full">
+        <label>Color Names</label>
+        <input id="productColorNames" placeholder="Ex: Black, Yellow, Orange" />
+      </div>
+
+      <div class="full">
+        <label>Color Image Uploads</label>
+        <button type="button" class="btn-secondary" onclick="buildColorUploadFields()">Create Color Upload Boxes</button>
+        <div id="colorUploadFields" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="full">
+        <label>Color Images (JSON) — optional fallback</label>
+        <textarea id="productColorImages" placeholder='{
+  "Black": "assets/images/black-shirt.jpg",
+  "Yellow": "assets/images/yellow-shirt.jpg",
+  "Orange": "assets/images/orange-shirt.jpg"
+}'></textarea>
+      </div>
+    </div>
+
+    <div class="help-box">
+      <strong>Easy way to use it:</strong><br><br>
+      1. Type your sizes.<br>
+      2. Click <strong>Create Size Price Boxes</strong>.<br>
+      3. Type a price for each size.<br>
+      4. Add your main image.<br>
+      5. Type your color names.<br>
+      6. Click <strong>Create Color Upload Boxes</strong>.<br>
+      7. Upload one image for each color.<br>
+      8. Save.<br><br>
+
+      To edit a product later, use the same product name and save again.
+    </div>
+
+    <div class="btn-row">
+  <button class="btn-main" onclick="saveProduct()">Save Product</button>
+  <button class="btn-secondary" onclick="clearForm()">Clear Form</button>
+  <button class="btn-secondary" onclick="exportProducts()">Export Products</button>
+  <button class="btn-danger" onclick="clearAllProducts()">Delete All Saved Products</button>
+  <button class="btn-secondary" onclick="copyProductsJson()">Copy Products JSON</button>
+</div>
+
+    <div class="saved-list">
+      <h3>Saved Admin Products</h3>
+      <p class="small">These are saved in your browser for now.</p>
+      <div id="savedProducts"></div>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PASSWORD = "MaraAdmin123";
+    const STORAGE_KEY = "maras_veloure_admin_only";
+
+    const dropBox = document.getElementById("imageDrop");
+    const fileInput = document.getElementById("imageFile");
+    const preview = document.getElementById("imagePreview");
+    const hiddenInput = document.getElementById("productImage");
+
+    function checkLogin() {
+      const value = document.getElementById("adminPassword").value;
+
+      if (value === ADMIN_PASSWORD) {
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("adminSection").style.display = "block";
+        renderSavedProducts();
+      } else {
+        alert("Wrong password");
+      }
+    }
+
+    function getSavedProducts() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function setSavedProducts(products) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+    }
+
+    function makeId(name) {
+      return name
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-");
+    }
+
+    function clearImageInput() {
+      hiddenInput.value = "";
+      preview.src = "";
+      preview.style.display = "none";
+      if (fileInput) fileInput.value = "";
+      if (dropBox) dropBox.textContent = "Drop image here or click";
+      if (dropBox) dropBox.classList.remove("dragover");
+    }
+
+    function clearColorUploadFields() {
+      const wrap = document.getElementById("colorUploadFields");
+      if (wrap) wrap.innerHTML = "";
+    }
+
+    function clearSizePriceFields() {
+      const wrap = document.getElementById("sizePriceFields");
+      if (wrap) wrap.innerHTML = "";
+    }
+
+    function clearForm() {
+      document.getElementById("productName").value = "";
+      document.getElementById("productCategory").value = "";
+      document.getElementById("productPrice").value = "";
+      document.getElementById("productSizes").value = "";
+      document.getElementById("productDescription").value = "";
+      document.getElementById("productColorNames").value = "";
+      document.getElementById("productColorImages").value = "";
+      clearImageInput();
+      clearColorUploadFields();
+      clearSizePriceFields();
+    }
+
+    function buildSizePriceFields() {
+      const sizesInput = document.getElementById("productSizes").value.trim();
+      const wrap = document.getElementById("sizePriceFields");
+      const basePrice = Number(document.getElementById("productPrice").value) || 0;
+
+      wrap.innerHTML = "";
+
+      if (!sizesInput) {
+        alert("Type sizes first.");
+        return;
+      }
+
+      const sizes = sizesInput
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      sizes.forEach(size => {
+        wrap.innerHTML += `
+          <div class="size-price-box">
+            <label>${size} Price</label>
+            <input type="number" data-size-price="${size}" placeholder="Enter price for ${size}" value="${basePrice || ''}" />
+          </div>
+        `;
+      });
+    }
+
+    function collectSizePrices(sizes, fallbackPrice) {
+      const inputs = document.querySelectorAll("#sizePriceFields input[data-size-price]");
+      const priceBySize = {};
+
+      if (inputs.length) {
+        inputs.forEach(input => {
+          const size = input.dataset.sizePrice;
+          const value = Number(input.value);
+
+          if (size) {
+            priceBySize[size] = value || fallbackPrice;
+          }
+        });
+      } else {
+        sizes.forEach(size => {
+          priceBySize[size] = fallbackPrice;
+        });
+      }
+
+      return priceBySize;
+    }
+
+    function saveProduct() {
+      const name = document.getElementById("productName").value.trim();
+      const category = document.getElementById("productCategory").value.trim();
+      const price = Number(document.getElementById("productPrice").value);
+      const sizesInput = document.getElementById("productSizes").value.trim();
+      const description = document.getElementById("productDescription").value.trim();
+      const image = document.getElementById("productImage").value.trim();
+      const colorNamesInput = document.getElementById("productColorNames").value.trim();
+      const colorImagesInput = document.getElementById("productColorImages").value.trim();
+
+     if (!name || !category || !price || !sizesInput || !image || !colorNamesInput) {
+  alert("Please fill in name, category, price, sizes, main image, and color names.");
+  return;
+}
+
+      const sizes = sizesInput
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      const colors = colorNamesInput
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      let colorImages = {};
+      const uploadedColorImages = collectColorImagesFromUploads();
+
+      if (Object.keys(uploadedColorImages).length > 0) {
+        colorImages = uploadedColorImages;
+      } else if (colorImagesInput) {
+        try {
+          colorImages = JSON.parse(colorImagesInput);
+        } catch (e) {
+          alert("Color Images JSON is not valid.");
+          return;
+        }
+      }
+
+      const priceBySize = collectSizePrices(sizes, price);
+
+      const product = {
+        id: makeId(name),
+        name,
+        subtitle: "",
+        category,
+        basePrice: price,
+        priceBySize,
+        priceNote: "",
+        description,
+        colors,
+        sizes,
+        image,
+        colorImages,
+        checkoutUrl: "#"
+      };
+
+      const products = getSavedProducts();
+      const existingIndex = products.findIndex(item => item.id === product.id);
+
+      if (existingIndex >= 0) {
+        products[existingIndex] = product;
+      } else {
+        products.push(product);
+      }
+
+      setSavedProducts(products);
+      renderSavedProducts();
+      clearForm();
+      alert("Saved!");
+    }
+
+    function deleteProduct(productId) {
+      const products = getSavedProducts().filter(item => item.id !== productId);
+      setSavedProducts(products);
+      renderSavedProducts();
+    }
+
+    function clearAllProducts() {
+      const ok = confirm("Delete all saved admin products?");
+      if (!ok) return;
+
+      localStorage.removeItem(STORAGE_KEY);
+      renderSavedProducts();
+      clearForm();
+    }
+
+    function renderSavedProducts() {
+      const box = document.getElementById("savedProducts");
+      const products = getSavedProducts();
+
+      if (products.length === 0) {
+        box.innerHTML = "<p>No saved products yet.</p>";
+        return;
+      }
+
+      box.innerHTML = products.map(product => `
+        <div class="saved-item">
+          <div>
+            <h4>${product.name}</h4>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>Base Price:</strong> $${product.basePrice}</p>
+            <p><strong>Sizes:</strong> ${product.sizes.join(", ")}</p>
+            <p><strong>Size Prices:</strong> ${Object.entries(product.priceBySize || {}).map(([size, value]) => `${size}: $${value}`).join(", ")}</p>
+            <p><strong>Colors:</strong> ${product.colors.join(", ")}</p>
+            <p><strong>Main Image:</strong> ${product.image ? "Uploaded" : "None"}</p>
+            <p><strong>Color Images:</strong> ${product.colorImages ? Object.keys(product.colorImages).join(", ") : "None"}</p>
+          </div>
+          <div>
+            <button class="btn-danger" onclick="deleteProduct('${product.id}')">Delete</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function handleFile(file) {
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const base64 = event.target.result;
+        hiddenInput.value = base64;
+        preview.src = base64;
+        preview.style.display = "block";
+        if (dropBox) dropBox.textContent = file.name;
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    if (dropBox && fileInput) {
+      dropBox.addEventListener("click", () => fileInput.click());
+
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        handleFile(file);
+      });
+
+      dropBox.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropBox.classList.add("dragover");
+      });
+
+      dropBox.addEventListener("dragleave", () => {
+        dropBox.classList.remove("dragover");
+      });
+
+      dropBox.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropBox.classList.remove("dragover");
+        const file = e.dataTransfer.files[0];
+        handleFile(file);
+      });
+    }
+
+    function buildColorUploadFields() {
+  const raw = document.getElementById("productColorNames").value;
+  const wrap = document.getElementById("colorUploadFields");
+
+  if (!wrap.dataset.loaded) {
+    wrap.innerHTML = "";
+    wrap.dataset.loaded = "true";
+  }
+
+  if (!raw || !raw.trim()) {
+    alert("Type your color names first.");
+    return;
+  }
+
+  const colors = raw
+    .split(",")
+    .map(color => color.trim())
+    .filter(color => color.length > 0);
+
+  colors.forEach((color, index) => {
+    // 🚫 prevent duplicate boxes
+    const exists = document.querySelector(`[data-color-name="${color}"]`);
+    if (exists) return;
+
+    const safeId = `color_${Date.now()}_${index}`;
+
+    const box = document.createElement("div");
+    box.className = "color-upload-box";
+    box.innerHTML = `
+      <strong>${color}</strong>
+      <div id="drop_${safeId}" class="color-upload-drop">Drop ${color} image here or click</div>
+      <input type="file" id="file_${safeId}" accept="image/*" style="display:none;" />
+      <input type="hidden" id="hidden_${safeId}" data-color-name="${color}" />
+      <img id="preview_${safeId}" class="color-upload-preview" />
+    `;
+
+    wrap.appendChild(box);
+
+    const drop = document.getElementById(`drop_${safeId}`);
+    const fileBox = document.getElementById(`file_${safeId}`);
+    const hidden = document.getElementById(`hidden_${safeId}`);
+    const preview = document.getElementById(`preview_${safeId}`);
+
+    drop.addEventListener("click", () => fileBox.click());
+
+    fileBox.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      handleColorFile(file, hidden, preview, drop);
+    });
+
+    drop.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      drop.classList.add("dragover");
+    });
+
+    drop.addEventListener("dragleave", () => {
+      drop.classList.remove("dragover");
+    });
+
+    drop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      drop.classList.remove("dragover");
+      const file = e.dataTransfer.files[0];
+      handleColorFile(file, hidden, preview, drop);
+    });
+  });
+}
+function handleColorFile(file, hiddenField, previewImg, dropTarget) {
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    const base64 = event.target.result;
+    hiddenField.value = base64;
+    previewImg.src = base64;
+    previewImg.style.display = "block";
+    dropTarget.textContent = file.name;
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function collectColorImagesFromUploads() {
+  const hiddenInputs = document.querySelectorAll('#colorUploadFields input[type="hidden"]');
+  const colorImages = {};
+
+  hiddenInputs.forEach(input => {
+    const colorName = input.dataset.colorName;
+    const imageValue = input.value.trim();
+
+    if (colorName && imageValue) {
+      colorImages[colorName] = imageValue;
+    }
+  });
+
+  return colorImages;
+}
+
+function exportProducts() {
+  const products = getSavedProducts();
+
+  if (!products.length) {
+    alert("No saved products to export.");
+    return;
+  }
+
+  const output = `const ADMIN_PRODUCTS = ${JSON.stringify(products, null, 2)};`;
+
+  navigator.clipboard.writeText(output)
+    .then(() => {
+      alert("Products copied. Paste them into products.js");
+    })
+    .catch(() => {
+      alert("Could not copy automatically. Open console and copy manually.");
+      console.log(output);
+    });
+
+     function copyProductsJson() {
+  const products = getSavedProducts();
+
+  if (!products.length) {
+    alert("No saved admin products found.");
+    return;
+  }
+
+  const formatted = JSON.stringify(products, null, 2);
+
+  navigator.clipboard.writeText(formatted)
+    .then(() => {
+      alert("Copied product JSON. Paste it into products.js");
+    })
+    .catch(() => {
+      alert("Copy failed. Open console to copy manually.");
+      console.log(formatted);
+    });
+}
+}
+  </script>
+</body>
+</html>

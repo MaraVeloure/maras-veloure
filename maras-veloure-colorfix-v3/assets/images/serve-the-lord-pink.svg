@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#f7cddd"/>
+  <rect x="150" y="130" width="900" height="940" rx="44" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)" stroke-width="4"/>
+  <text x="600" y="470" text-anchor="middle" fill="#342533" font-family="Arial, Helvetica, sans-serif" font-size="130" font-weight="800">I WILL SERVE</text>
+  <text x="600" y="620" text-anchor="middle" fill="#8b2c5d" font-family="Arial, Helvetica, sans-serif" font-size="150" font-weight="900">THE LORD</text>
+  <text x="600" y="760" text-anchor="middle" fill="#342533" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">Mara’s Velouré preview placeholder</text>
+  <text x="600" y="820" text-anchor="middle" fill="#342533" font-family="Arial, Helvetica, sans-serif" font-size="34">Replace with your uploaded mockup image anytime</text>
+</svg>

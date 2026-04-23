@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mara’s Velouré</title>
+  <meta name="description" content="Mara’s Velouré — premium unisex clothing and accessories built around discipline, growth, confidence, and everyday style." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="promo-bar">Soft Luxe Style. Bold Confidence. • Free Shipping on Orders $75+</div>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <button id="menuBtn" class="icon-btn mobile-only" aria-label="Open menu">☰</button>
+        <a href="#home" class="brand">Mara’s Velouré</a>
+      </div>
+
+      <nav id="mainNav" class="main-nav">
+        <a href="#shop">Shop</a>
+        <a href="#featured">Featured</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="top-actions">
+        <button id="musicToggle" class="pill-btn ghost">♫ Music Off</button>
+        <button id="cartBtn" class="pill-btn">Cart <span id="cartCount">0</span></button>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero-showcase-image">
+  <img src="assets/images/ChatGPT Image Apr 22, 2026, 11_43_39 PM.png" class="hero-img">
+</div>
+      </section>
+
+      <section class="feature-strip" aria-label="Store highlights">
+        <article class="feature-pill"><strong>Premium Quality</strong><span> Statement pieces with a polished finish</span></article>
+        <article class="feature-pill"><strong>Multiple Colors</strong><span> Pick the shade that fits your look</span></article>
+        <article class="feature-pill"><strong>Secure Checkout</strong><span> Quick card checkout from your cart</span></article>
+        <article class="feature-pill"><strong>Made to Stand Out</strong><span> Faith, fitness, confidence, and purpose</span></article>
+      </section>
+
+      <section id="featured" class="story-section story-luxury">
+        <div class="story-card large luxe-surface">
+          <p class="eyebrow">Featured feel</p>
+          <h2>Your style. Your statement.</h2>
+          <p>
+            Mara’s Velouré is built for bold everyday expression clean looks, meaningful messages, and unisex pieces that feel good on anybody.
+          </p>
+        </div>
+        <div class="story-card luxe-surface">
+          <h3>For men &amp; women</h3>
+          <p>Balanced colors, clean styling, and easy fits that work across your whole customer base.</p>
+        </div>
+        <div class="story-card luxe-surface">
+          <h3>Easy to shop</h3>
+          <p>Shoppers can choose colors, sizes, and quantities, then head straight to secure checkout from the cart.</p>
+        </div>
+      </section>
+
+      <section id="shop" class="shop-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Shop Mara’s Velouré</p>
+            <h2>Current collection</h2>
+          </div>
+          <div class="shop-tools">
+            <input id="searchInput" type="text" placeholder="Search products" aria-label="Search products" />
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="all">All categories</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="productGrid" class="product-grid"></div>
+      </section>
+
+      <section id="about" class="checkout-section brand-section">
+        <div class="section-head left-only">
+          <div>
+            <p class="eyebrow">About the brand</p>
+            <h2>Built around purpose, confidence, and clean style.</h2>
+          </div>
+        </div>
+
+        <div class="checkout-grid">
+          <div class="checkout-card luxe-surface">
+            <h3>Brand vibe</h3>
+            <p>
+              Mara’s Velouré keeps it simple clean designs that speak for themselves.
+            </p>
+          </div>
+          <div class="checkout-card luxe-surface">
+            <h3>What customers can expect</h3>
+            <p>
+              Easy product selection and secure checkout, just how it should be.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section">
+        <div class="contact-card luxe-surface">
+          <p class="eyebrow">Connect with Mara’s Velouré</p>
+          <h2>Simple shopping made easy.</h2>
+          <p>For questions, custom requests, or order help, reach out below.</p>
+          <div class="contact-links">
+            <span class="coming-soon">Instagram coming soon</span>
+            <a href="https://www.facebook.com/share/1H4pJcWqhm/" target="_blank" rel="noopener">Facebook</a>
+            <a href="mailto:tamarracollective@gmail.com">tamarracollective@gmail.com</a>
+            <span class="coming-soon">TikTok coming soon</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-header">
+      <h2>Your cart</h2>
+      <button id="closeCartBtn" class="icon-btn" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-summary">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">$0.00</strong>
+      </div>
+      <p id="cartMessage" class="cart-note" data-kind="info">
+        Add one or more items to start checkout.
+      </p>
+      <div class="cart-actions">
+        <button id="stripeCheckoutBtn" class="cta-btn block" type="button">Checkout with card</button>
+        <button id="clearCartBtn" class="cta-btn secondary block" type="button">Clear cart</button>
+      </div>
+    </div>
+  </aside>
+
+  <div id="overlay" class="overlay hidden"></div>
+
+  <div id="imagePreviewModal" class="image-preview-modal hidden" aria-hidden="true">
+    <div class="image-preview-backdrop" data-close-preview="true"></div>
+    <div class="image-preview-card">
+      <button id="closePreviewBtn" class="icon-btn preview-close" aria-label="Close preview">✕</button>
+      <img id="previewImage" src="" alt="Product preview" />
+      <div class="preview-meta">
+        <p id="previewTitle" class="preview-title"></p>
+        <p id="previewDetails" class="preview-details"></p>
+      </div>
+    </div>
+  </div>
+
+  <audio id="siteMusic" loop>
+    <source src="assets/music/your-song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

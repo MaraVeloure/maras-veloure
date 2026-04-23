@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order confirmed • Mara’s Velouré</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="status-page">
+    <div class="status-card">
+      <p class="eyebrow">Mara’s Velouré</p>
+      <h1>Thank you for your order.</h1>
+      <p>Your payment was submitted through Stripe Checkout. Your cart has been cleared on this device.</p>
+      <div class="hero-actions">
+        <a class="cta-btn" href="index.html">Back to shop</a>
+        <a class="cta-btn secondary" href="mailto:tamarracollective@gmail.com">Need help?</a>
+      </div>
+    </div>
+  </main>
+  <script>
+    localStorage.removeItem('marasVeloureCart');
+  </script>
+</body>
+</html>
